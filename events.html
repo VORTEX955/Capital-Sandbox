@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Capital Sandbox — الأحداث</title>
+    <link rel="stylesheet" href="css/events.css" />
+  </head>
+  <body>
+    <nav class="site-nav">
+      <div class="brand">Capital Sandbox</div>
+      <div class="nav-actions">
+        <a href="index.html">الرئيسية</a>
+        <a href="stats.html">الإحصائيات</a>
+        <a href="events.html" class="active">الأحداث</a>
+        <button id="themeToggle" aria-label="تبديل النمط"></button>
+      </div>
+    </nav>
+
+    <main class="shell">
+      <section class="card form-card">
+        <h2>إضافة حدث يدوي</h2>
+        <form id="eventForm">
+          <label>
+            عنوان الحدث
+            <input type="text" id="eventTitle" placeholder="مثال: حملة تسويق" />
+          </label>
+          <label>
+            القيمة
+            <input type="number" id="eventValue" placeholder="1000" step="50" />
+          </label>
+          <label>
+            التأثير
+            <select id="eventImpact">
+              <option value="increase">زيادة</option>
+              <option value="decrease">نقص</option>
+            </select>
+          </label>
+          <label>
+            ملاحظة
+            <textarea id="eventNote" rows="3" placeholder="تفاصيل إضافية"></textarea>
+          </label>
+          <button type="submit" class="primary-button">حفظ الحدث</button>
+        </form>
+      </section>
+
+      <section class="card table-card">
+        <header>
+          <div>
+            <p class="eyebrow">سجل الأحداث</p>
+            <h2>الأحداث اليدوية</h2>
+          </div>
+        </header>
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>العنوان</th>
+                <th>القيمة</th>
+                <th>التأثير</th>
+                <th>الملاحظة</th>
+                <th>الإجراء</th>
+              </tr>
+            </thead>
+            <tbody id="eventsTableBody">
+              <tr>
+                <td colspan="5" class="empty-row">لا توجد أحداث بعد</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+
+    <script src="js/events.js" type="module"></script>
+  </body>
+</html>
+
