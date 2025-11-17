@@ -1,229 +1,275 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
-
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Capital Sandbox</title>
     <link rel="stylesheet" href="home.css" />
-</head>
-
-<body>
+  </head>
+  <body>
     <div class="app-shell">
-        <header class="hero">
-            <div class="hero-text">
-                <div>
-                    <p class="eyebrow">مختبر رأس المال التفاعلي</p>
-                    <h1>Capital Sandbox 2.0</h1>
-                    <p class="subtitle">
-                        صمّم اقتصادك المصغّر، راقب المسار البياني، وتعامل مع الأحداث
-                        الذكية في مساحة مرحة بدون قيود أو خسارة إجبارية.
-                    </p>
-                </div>
-                <form id="capitalForm" class="hero-form">
-                    <label>
-                        تعديل فوري
-                        <input type="number" id="capitalDeltaInput" placeholder="أدخل قيمة موجبة أو سالبة" step="100" />
-                    </label>
-                    <button type="submit" class="primary-button">طبق التعديل</button>
-                    <button type="button" id="resetStateBtn" class="ghost-button">
-                        إعادة ضبط
-                    </button>
-                </form>
-                <div class="quick-buttons">
-                    <button data-delta="1000">+1,000</button>
-                    <button data-delta="-1000">-1,000</button>
-                    <button data-delta="5000">+5,000</button>
-                    <button data-delta="-5000">-5,000</button>
-                </div>
+      <header class="hero">
+        <div class="hero-text">
+          <div>
+            <p class="eyebrow">مختبر رأس المال التفاعلي</p>
+            <h1>Capital Sandbox 2.0</h1>
+            <p class="subtitle">
+              صمّم اقتصادك المصغّر، راقب المسار البياني، وتعامل مع الأحداث
+              الذكية في مساحة مرحة بدون قيود أو خسارة إجبارية.
+            </p>
+          </div>
+          <form id="capitalForm" class="hero-form">
+            <label>
+              تعديل فوري
+              <input
+                type="number"
+                id="capitalDeltaInput"
+                placeholder="أدخل قيمة موجبة أو سالبة"
+                step="100"
+              />
+            </label>
+            <button type="submit" class="primary-button">طبق التعديل</button>
+            <button type="button" id="resetStateBtn" class="ghost-button">
+              إعادة ضبط
+            </button>
+          </form>
+          <div class="quick-buttons">
+            <button data-delta="1000">+1,000</button>
+            <button data-delta="-1000">-1,000</button>
+            <button data-delta="5000">+5,000</button>
+            <button data-delta="-5000">-5,000</button>
+          </div>
+        </div>
+        <div class="hero-side">
+          <div class="capital-meter">
+            <span>الرصيد المباشر</span>
+            <strong id="capitalDisplay">0</strong>
+            <p id="trendPill">+0 خلال آخر دورة</p>
+          </div>
+          <div class="flow-controls">
+            <button id="toggleFlowBtn" class="secondary-button">
+              إيقاف التدفق
+            </button>
+            <div class="speed-control">
+              <span>سرعة المحاكاة</span>
+              <input
+                type="range"
+                id="speedSlider"
+                min="500"
+                max="5000"
+                step="250"
+                value="2000"
+              />
+              <small id="tickSpeedDisplay">سرعة: 2ث</small>
             </div>
-            <div class="hero-side">
-                <div class="capital-meter">
-                    <span>الرصيد المباشر</span>
-                    <strong id="capitalDisplay">0</strong>
-                    <p id="trendPill">+0 خلال آخر دورة</p>
-                </div>
-                <div class="flow-controls">
-                    <button id="toggleFlowBtn" class="secondary-button">
-                        إيقاف التدفق
-                    </button>
-                    <div class="speed-control">
-                        <span>سرعة المحاكاة</span>
-                        <input type="range" id="speedSlider" min="500" max="5000" step="250" value="2000" />
-                        <small id="tickSpeedDisplay">سرعة: 2ث</small>
-                    </div>
-                </div>
-                <div class="time-chip">
-                    <span>زمن اللعب</span>
-                    <strong id="timeDisplay">0 دورة</strong>
-                </div>
-            </div>
+          </div>
+          <div class="time-chip">
+            <span>زمن اللعب</span>
+            <strong id="timeDisplay">0 دورة</strong>
+          </div>
+        </div>
+      </header>
+
+      <section class="stats-grid">
+        <article class="stat-card">
+          <span>صافي التغير / دورة</span>
+          <strong id="netChangeDisplay">0</strong>
+          <small>متوسط بعد المؤثرات</small>
+        </article>
+        <article class="stat-card">
+          <span>إجمالي الدخل</span>
+          <strong id="incomeTotalDisplay">+0</strong>
+          <small>محسوب حسب التكرار</small>
+        </article>
+        <article class="stat-card">
+          <span>إجمالي المصاريف</span>
+          <strong id="expenseTotalDisplay">-0</strong>
+          <small>بعد ضغط التكاليف</small>
+        </article>
+        <article class="stat-card">
+          <span>خط الأمان</span>
+          <strong id="runwayDisplay">∞</strong>
+          <small>دورات متبقية بنفس الإيقاع</small>
+        </article>
+      </section>
+
+      <section class="panel scenario-panel">
+        <header>
+          <div>
+            <p class="eyebrow">معمل السيناريو</p>
+            <h2>حوّل المتغيرات إلى لعبة</h2>
+          </div>
+          <button id="randomEventBtn" class="ghost-button">
+            طبّق حدثًا ذكيًا
+          </button>
         </header>
-
-        <section class="stats-grid">
-            <article class="stat-card">
-                <span>صافي التغير / دورة</span>
-                <strong id="netChangeDisplay">0</strong>
-                <small>متوسط بعد المؤثرات</small>
-            </article>
-            <article class="stat-card">
-                <span>إجمالي الدخل</span>
-                <strong id="incomeTotalDisplay">+0</strong>
-                <small>محسوب حسب التكرار</small>
-            </article>
-            <article class="stat-card">
-                <span>إجمالي المصاريف</span>
-                <strong id="expenseTotalDisplay">-0</strong>
-                <small>بعد ضغط التكاليف</small>
-            </article>
-            <article class="stat-card">
-                <span>خط الأمان</span>
-                <strong id="runwayDisplay">∞</strong>
-                <small>دورات متبقية بنفس الإيقاع</small>
-            </article>
-        </section>
-
-        <section class="panel scenario-panel">
-            <header>
-                <div>
-                    <p class="eyebrow">معمل السيناريو</p>
-                    <h2>حوّل المتغيرات إلى لعبة</h2>
-                </div>
-                <button id="randomEventBtn" class="ghost-button">
-                    طبّق حدثًا ذكيًا
-                </button>
-            </header>
-            <div class="scenario-grid">
-                <div class="slider-stack">
-                    <label>
-                        دفعة النمو
-                        <span id="growthValue">+10٪</span>
-                        <input type="range" id="growthSlider" min="0" max="60" value="10" />
-                    </label>
-                    <label>
-                        ضغط التكاليف
-                        <span id="costValue">+5٪</span>
-                        <input type="range" id="costSlider" min="0" max="40" value="5" />
-                    </label>
-                    <label>
-                        حساسية الأحداث
-                        <span id="volatilityValue">+15٪</span>
-                        <input type="range" id="volatilitySlider" min="0" max="60" value="15" />
-                    </label>
-                </div>
-                <div class="scenario-actions">
-                    <p>اختصر الطريق:</p>
-                    <div class="preset-buttons">
-                        <button data-preset="calm">وضع مطمئن</button>
-                        <button data-preset="balanced">وضع متوازن</button>
-                        <button data-preset="aggressive">وضع هجومي</button>
-                    </div>
-                    <label>
-                        ملاحظات السيناريو
-                        <textarea id="scenarioNote" rows="3" placeholder="اكتب ما يحدث في هذا السيناريو..."></textarea>
-                    </label>
-                    <button id="saveSnapshotBtn" class="primary-button">
-                        حفظ لقطة
-                    </button>
-                </div>
-                <div class="snapshot-board">
-                    <h3>لَقطاتك</h3>
-                    <ul id="snapshotsList" class="snapshots-list"></ul>
-                </div>
+        <div class="scenario-grid">
+          <div class="slider-stack">
+            <label>
+              دفعة النمو
+              <span id="growthValue">+10٪</span>
+              <input
+                type="range"
+                id="growthSlider"
+                min="0"
+                max="60"
+                value="10"
+              />
+            </label>
+            <label>
+              ضغط التكاليف
+              <span id="costValue">+5٪</span>
+              <input
+                type="range"
+                id="costSlider"
+                min="0"
+                max="40"
+                value="5"
+              />
+            </label>
+            <label>
+              حساسية الأحداث
+              <span id="volatilityValue">+15٪</span>
+              <input
+                type="range"
+                id="volatilitySlider"
+                min="0"
+                max="60"
+                value="15"
+              />
+            </label>
+          </div>
+          <div class="scenario-actions">
+            <p>اختصر الطريق:</p>
+            <div class="preset-buttons">
+              <button data-preset="calm">وضع مطمئن</button>
+              <button data-preset="balanced">وضع متوازن</button>
+              <button data-preset="aggressive">وضع هجومي</button>
             </div>
-        </section>
+            <label>
+              ملاحظات السيناريو
+              <textarea
+                id="scenarioNote"
+                rows="3"
+                placeholder="اكتب ما يحدث في هذا السيناريو..."
+              ></textarea>
+            </label>
+            <button id="saveSnapshotBtn" class="primary-button">
+              حفظ لقطة
+            </button>
+          </div>
+          <div class="snapshot-board">
+            <h3>لَقطاتك</h3>
+            <ul id="snapshotsList" class="snapshots-list"></ul>
+          </div>
+        </div>
+      </section>
 
-        <section class="streams-grid">
-            <article class="panel flows-panel">
-                <header>
-                    <div>
-                        <p class="eyebrow">مصادر الدخل</p>
-                        <h2>صمّم تدفقاتك</h2>
-                    </div>
-                </header>
-                <form id="incomeForm" class="flow-form">
-                    <input type="text" id="incomeName" placeholder="اسم المصدر" />
-                    <input type="number" id="incomeAmount" placeholder="القيمة" />
-                    <select id="incomeCadence">
-                        <option value="1">كل دورة</option>
-                        <option value="2">كل دورتين</option>
-                        <option value="4">كل 4 دورات</option>
-                    </select>
-                    <label class="range-field">
-                        معامل السرعة
-                        <input type="range" id="incomeMultiplier" min="0.25" max="3" step="0.25" value="1" />
-                        <span id="incomeMultiplierValue">x1</span>
-                    </label>
-                    <button type="submit" class="primary-button">أضف دخلًا</button>
-                </form>
-                <ul id="incomeList" class="item-list"></ul>
-            </article>
+      <section class="streams-grid">
+        <article class="panel flows-panel">
+          <header>
+            <div>
+              <p class="eyebrow">مصادر الدخل</p>
+              <h2>صمّم تدفقاتك</h2>
+            </div>
+          </header>
+          <form id="incomeForm" class="flow-form">
+            <input type="text" id="incomeName" placeholder="اسم المصدر" />
+            <input type="number" id="incomeAmount" placeholder="القيمة" />
+            <select id="incomeCadence">
+              <option value="1">كل دورة</option>
+              <option value="2">كل دورتين</option>
+              <option value="4">كل 4 دورات</option>
+            </select>
+            <label class="range-field">
+              معامل السرعة
+              <input
+                type="range"
+                id="incomeMultiplier"
+                min="0.25"
+                max="3"
+                step="0.25"
+                value="1"
+              />
+              <span id="incomeMultiplierValue">x1</span>
+            </label>
+            <button type="submit" class="primary-button">أضف دخلًا</button>
+          </form>
+          <ul id="incomeList" class="item-list"></ul>
+        </article>
 
-            <article class="panel flows-panel">
-                <header>
-                    <div>
-                        <p class="eyebrow">المصاريف</p>
-                        <h2>اضبط الاستنزاف</h2>
-                    </div>
-                </header>
-                <form id="expenseForm" class="flow-form">
-                    <input type="text" id="expenseName" placeholder="اسم المصروف" />
-                    <input type="number" id="expenseAmount" placeholder="القيمة" />
-                    <select id="expenseCadence">
-                        <option value="1">كل دورة</option>
-                        <option value="2">كل دورتين</option>
-                        <option value="4">كل 4 دورات</option>
-                    </select>
-                    <label class="range-field">
-                        معامل السرعة
-                        <input type="range" id="expenseMultiplier" min="0.25" max="3" step="0.25" value="1" />
-                        <span id="expenseMultiplierValue">x1</span>
-                    </label>
-                    <button type="submit" class="primary-button">أضف مصروفًا</button>
-                </form>
-                <ul id="expenseList" class="item-list"></ul>
-            </article>
-        </section>
+        <article class="panel flows-panel">
+          <header>
+            <div>
+              <p class="eyebrow">المصاريف</p>
+              <h2>اضبط الاستنزاف</h2>
+            </div>
+          </header>
+          <form id="expenseForm" class="flow-form">
+            <input type="text" id="expenseName" placeholder="اسم المصروف" />
+            <input type="number" id="expenseAmount" placeholder="القيمة" />
+            <select id="expenseCadence">
+              <option value="1">كل دورة</option>
+              <option value="2">كل دورتين</option>
+              <option value="4">كل 4 دورات</option>
+            </select>
+            <label class="range-field">
+              معامل السرعة
+              <input
+                type="range"
+                id="expenseMultiplier"
+                min="0.25"
+                max="3"
+                step="0.25"
+                value="1"
+              />
+              <span id="expenseMultiplierValue">x1</span>
+            </label>
+            <button type="submit" class="primary-button">أضف مصروفًا</button>
+          </form>
+          <ul id="expenseList" class="item-list"></ul>
+        </article>
+      </section>
 
-        <section class="insights-grid">
-            <article class="panel chart-panel">
-                <header>
-                    <div>
-                        <p class="eyebrow">الرسم الحي</p>
-                        <h2>رحلة رأس المال</h2>
-                    </div>
-                </header>
-                <canvas id="capitalChart" width="900" height="260"></canvas>
-            </article>
-            <article class="panel insights-panel">
-                <header>
-                    <div>
-                        <p class="eyebrow">مساعد ذكي</p>
-                        <h2>نبض الساحة</h2>
-                    </div>
-                </header>
-                <ul id="insightsList" class="insights-list"></ul>
-                <div class="insight-actions">
-                    <button data-pulse="boost">دفعة إلى الدخل</button>
-                    <button data-pulse="trim">ترشيد للمصاريف</button>
-                    <button data-pulse="shock">اختبار صدمة</button>
-                </div>
-            </article>
-        </section>
+      <section class="insights-grid">
+        <article class="panel chart-panel">
+          <header>
+            <div>
+              <p class="eyebrow">الرسم الحي</p>
+              <h2>رحلة رأس المال</h2>
+            </div>
+          </header>
+          <canvas id="capitalChart" width="900" height="260"></canvas>
+        </article>
+        <article class="panel insights-panel">
+          <header>
+            <div>
+              <p class="eyebrow">مساعد ذكي</p>
+              <h2>نبض الساحة</h2>
+            </div>
+          </header>
+          <ul id="insightsList" class="insights-list"></ul>
+          <div class="insight-actions">
+            <button data-pulse="boost">دفعة إلى الدخل</button>
+            <button data-pulse="trim">ترشيد للمصاريف</button>
+            <button data-pulse="shock">اختبار صدمة</button>
+          </div>
+        </article>
+      </section>
 
-        <section class="panel logs-panel">
-            <header>
-                <div>
-                    <p class="eyebrow">دفتر الأحداث</p>
-                    <h2>كل خطوة موثّقة</h2>
-                </div>
-                <button id="clearLogsBtn" class="ghost-button">مسح السجل</button>
-            </header>
-            <ul id="logsList"></ul>
-        </section>
+      <section class="panel logs-panel">
+        <header>
+          <div>
+            <p class="eyebrow">دفتر الأحداث</p>
+            <h2>كل خطوة موثّقة</h2>
+          </div>
+          <button id="clearLogsBtn" class="ghost-button">مسح السجل</button>
+        </header>
+        <ul id="logsList"></ul>
+      </section>
     </div>
 
     <script src="main.js" type="module"></script>
-</body>
-
+  </body>
 </html>
+
