@@ -83,7 +83,7 @@ function renderEvents() {
 
   dom.eventsTableBody.innerHTML = events
     .map((evt) => {
-      const date = new Date(evt.timestamp).toLocaleDateString("ar-EG", {
+      const date = new Date(evt.timestamp).toLocaleDateString("en-US", {
         dateStyle: "medium",
       });
       const impactLabel = evt.impact === "increase" ? "زيادة" : "نقص";
@@ -104,7 +104,7 @@ function renderEvents() {
 }
 
 function formatCurrency(value) {
-  return Number(value).toLocaleString("ar-EG", {
+  return Number(value).toLocaleString("en-US", {
     maximumFractionDigits: 0,
   });
 }

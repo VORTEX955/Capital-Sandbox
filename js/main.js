@@ -110,7 +110,7 @@ function renderTransactions() {
 
   dom.transactionTableBody.innerHTML = rows
     .map((item) => {
-      const date = new Date(item.timestamp).toLocaleString("ar-EG", {
+      const date = new Date(item.timestamp).toLocaleString("en-US", {
         dateStyle: "medium",
         timeStyle: "short",
       });
@@ -129,7 +129,7 @@ function renderTransactions() {
 }
 
 function formatCurrency(value) {
-  return Number(value).toLocaleString("ar-EG", {
+  return Number(value).toLocaleString("en-US", {
     maximumFractionDigits: 0,
   });
 }

@@ -4,29 +4,33 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Capital Sandbox — الرئيسية</title>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+    />
     <link rel="stylesheet" href="css/main.css" />
   </head>
   <body>
     <nav class="site-nav">
-      <div class="brand">Capital Sandbox</div>
+      <div class="brand"><i class="bx bx-rocket"></i><span>Capital Sandbox</span></div>
       <div class="nav-actions">
-        <a href="index.html" class="active">الرئيسية</a>
-        <a href="stats.html">الإحصائيات</a>
-        <a href="events.html">الأحداث</a>
+        <a href="index.html" class="active"><i class="bx bx-home-alt-2"></i><span>الرئيسية</span></a>
+        <a href="stats.html"><i class="bx bx-doughnut-chart"></i><span>الإحصائيات</span></a>
+        <a href="events.html"><i class="bx bx-calendar-event"></i><span>الأحداث</span></a>
         <button id="themeToggle" aria-label="تبديل النمط"></button>
       </div>
     </nav>
 
     <main class="shell">
       <section class="card capital-card">
-        <p class="eyebrow">رأس المال الحالي</p>
+        <p class="eyebrow"><i class="bx bx-wallet"></i> رأس المال الحالي</p>
         <h1 id="capitalDisplay">0</h1>
         <button id="resetStateBtn" class="ghost-button">إعادة ضبط</button>
       </section>
 
       <section class="forms-grid">
         <form id="incomeForm" class="card form-card">
-          <h2>إضافة دخل</h2>
+        <h2><i class="bx bx-trending-up"></i> إضافة دخل</h2>
           <label>
             اسم الدخل
             <input type="text" id="incomeName" placeholder="مثال: مبيعات" />
@@ -39,7 +43,7 @@
         </form>
 
         <form id="expenseForm" class="card form-card">
-          <h2>إضافة مصروف</h2>
+        <h2><i class="bx bx-trending-down"></i> إضافة مصروف</h2>
           <label>
             اسم المصروف
             <input type="text" id="expenseName" placeholder="مثال: إيجار" />
@@ -55,7 +59,7 @@
       <section class="card table-card">
         <header>
           <div>
-            <p class="eyebrow">سجل العمليات</p>
+            <p class="eyebrow"><i class="bx bx-list-check"></i> سجل العمليات</p>
             <h2>الدخل والمصروف</h2>
           </div>
         </header>

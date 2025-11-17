@@ -50,9 +50,9 @@ function renderCounts() {
     if (t.timestamp >= startOfWeek) week += 1;
   });
 
-  dom.todayCount.textContent = `${today} عملية`;
-  dom.weekCount.textContent = `${week} عملية`;
-  dom.totalCount.textContent = `${state.transactions.length} عملية`;
+  dom.todayCount.textContent = `${formatNumber(today)} عملية`;
+  dom.weekCount.textContent = `${formatNumber(week)} عملية`;
+  dom.totalCount.textContent = `${formatNumber(state.transactions.length)} عملية`;
 }
 
 function drawCapitalChart() {
@@ -168,8 +168,10 @@ function drawRatioChart() {
   ctx.fillStyle = getComputedStyle(document.body).getPropertyValue("--text");
   ctx.font = "18px Cairo";
   ctx.textAlign = "center";
-  ctx.fillText(`${Math.round((totals.income / total) * 100)}٪ دخل`, centerX, centerY - 8);
-  ctx.fillText(`${Math.round((totals.expense / total) * 100)}٪ مصروف`, centerX, centerY + 20);
+  const incomePercent = formatNumber(Math.round((totals.income / total) * 100));
+  const expensePercent = formatNumber(Math.round((totals.expense / total) * 100));
+  ctx.fillText(`${incomePercent}٪ دخل`, centerX, centerY - 8);
+  ctx.fillText(`${expensePercent}٪ مصروف`, centerX, centerY + 20);
 }
 
 function initTheme() {
@@ -202,5 +204,11 @@ function updateThemeIcon(mode) {
     dom.themeToggle.textContent = "وضع ليلي 🌙";
     dom.themeToggle.setAttribute("aria-label", "التبديل إلى الوضع الليلي");
   }
+}
+
+function formatNumber(value) {
+  return Number(value).toLocaleString("en-US", {
+    maximumFractionDigits: 0,
+  });
 }
 

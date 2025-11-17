@@ -4,22 +4,26 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Capital Sandbox — الأحداث</title>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+    />
     <link rel="stylesheet" href="css/events.css" />
   </head>
   <body>
     <nav class="site-nav">
-      <div class="brand">Capital Sandbox</div>
+      <div class="brand"><i class="bx bx-rocket"></i><span>Capital Sandbox</span></div>
       <div class="nav-actions">
-        <a href="index.html">الرئيسية</a>
-        <a href="stats.html">الإحصائيات</a>
-        <a href="events.html" class="active">الأحداث</a>
+        <a href="index.html"><i class="bx bx-home-alt-2"></i><span>الرئيسية</span></a>
+        <a href="stats.html"><i class="bx bx-doughnut-chart"></i><span>الإحصائيات</span></a>
+        <a href="events.html" class="active"><i class="bx bx-calendar-event"></i><span>الأحداث</span></a>
         <button id="themeToggle" aria-label="تبديل النمط"></button>
       </div>
     </nav>
 
     <main class="shell">
       <section class="card form-card">
-        <h2>إضافة حدث يدوي</h2>
+        <h2><i class="bx bx-edit-alt"></i> إضافة حدث يدوي</h2>
         <form id="eventForm">
           <label>
             عنوان الحدث
@@ -47,7 +51,7 @@
       <section class="card table-card">
         <header>
           <div>
-            <p class="eyebrow">سجل الأحداث</p>
+            <p class="eyebrow"><i class="bx bx-bookmark"></i> سجل الأحداث</p>
             <h2>الأحداث اليدوية</h2>
           </div>
         </header>
