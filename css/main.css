@@ -130,6 +130,38 @@ a {
   gap: 24px;
 }
 
+.quick-adjust-card .quick-buttons {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.quick-buttons .chip {
+  border: none;
+  border-radius: 12px;
+  padding: 10px 0;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.2s ease;
+}
+
+.quick-buttons .chip.positive {
+  background: var(--primary-soft);
+  color: var(--primary);
+}
+
+.quick-buttons .chip.negative {
+  background: rgba(242, 100, 100, 0.15);
+  color: var(--danger);
+}
+
+.quick-buttons .chip:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(15, 23, 42, 0.08);
+}
+
 .form-card {
   display: flex;
   flex-direction: column;

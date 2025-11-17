@@ -17,6 +17,7 @@ const dom = {
   expenseName: document.getElementById("expenseName"),
   expenseAmount: document.getElementById("expenseAmount"),
   transactionTableBody: document.getElementById("transactionTableBody"),
+  quickButtons: document.querySelectorAll(".quick-buttons .chip"),
   themeToggle: document.getElementById("themeToggle"),
 };
 
@@ -48,6 +49,15 @@ function saveState() {
 
 function bindEvents() {
   dom.incomeForm.addEventListener("submit", (event) => {
+  dom.quickButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      const delta = Number(button.dataset.delta);
+      if (!Number.isFinite(delta) || delta === 0) return;
+      const type = delta > 0 ? "income" : "expense";
+      const name = delta > 0 ? "ضبط سريع +" : "ضبط سريع -";
+      addTransaction(type, name, Math.abs(delta));
+    });
+  });
     event.preventDefault();
     const name = dom.incomeName.value.trim() || "دخل بدون اسم";
     const amount = Number(dom.incomeAmount.value);
