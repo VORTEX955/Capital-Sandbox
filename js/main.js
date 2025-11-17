@@ -17,7 +17,7 @@ const dom = {
   expenseName: document.getElementById("expenseName"),
   expenseAmount: document.getElementById("expenseAmount"),
   transactionTableBody: document.getElementById("transactionTableBody"),
-  quickButtons: document.querySelectorAll(".quick-buttons .chip"),
+  quickButtonsContainer: document.querySelector(".quick-buttons"),
   themeToggle: document.getElementById("themeToggle"),
 };
 
@@ -49,14 +49,14 @@ function saveState() {
 
 function bindEvents() {
   dom.incomeForm.addEventListener("submit", (event) => {
-  dom.quickButtons.forEach((button) => {
-    button.addEventListener("click", () => {
-      const delta = Number(button.dataset.delta);
-      if (!Number.isFinite(delta) || delta === 0) return;
-      const type = delta > 0 ? "income" : "expense";
-      const name = delta > 0 ? "ضبط سريع +" : "ضبط سريع -";
-      addTransaction(type, name, Math.abs(delta));
-    });
+  dom.quickButtonsContainer?.addEventListener("click", (event) => {
+    const button = event.target.closest("button[data-delta]");
+    if (!button) return;
+    const delta = Number(button.dataset.delta);
+    if (!Number.isFinite(delta) || delta === 0) return;
+    const type = delta > 0 ? "income" : "expense";
+    const name = delta > 0 ? "ضبط سريع +" : "ضبط سريع -";
+    addTransaction(type, name, Math.abs(delta));
   });
     event.preventDefault();
     const name = dom.incomeName.value.trim() || "دخل بدون اسم";
@@ -161,10 +161,10 @@ function toggleTheme() {
 function updateThemeIcon(mode) {
   if (!dom.themeToggle) return;
   if (mode === "dark") {
-    dom.themeToggle.textContent = "وضع صباحي ☀️";
+    dom.themeToggle.textContent = "☀️";
     dom.themeToggle.setAttribute("aria-label", "التبديل إلى الوضع الصباحي");
   } else {
-    dom.themeToggle.textContent = "وضع ليلي 🌙";
+    dom.themeToggle.textContent = "🌙";
     dom.themeToggle.setAttribute("aria-label", "التبديل إلى الوضع الليلي");
   }
 }
