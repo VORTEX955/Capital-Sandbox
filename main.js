@@ -16,6 +16,7 @@ const defaultState = {
   },
   scenarioNote: "",
   snapshots: [],
+  quickAdjustments: [1000, -1000, 5000, -5000],
 };
 
 const clone = (value) =>
@@ -36,7 +37,9 @@ const dom = {
   capitalForm: document.getElementById("capitalForm"),
   capitalDeltaInput: document.getElementById("capitalDeltaInput"),
   resetStateBtn: document.getElementById("resetStateBtn"),
-  quickButtons: document.querySelectorAll(".quick-buttons button"),
+  quickButtons: document.getElementById("quickButtons"),
+  quickEditorList: document.getElementById("quickEditorList"),
+  addQuickBtn: document.getElementById("addQuickBtn"),
   toggleFlowBtn: document.getElementById("toggleFlowBtn"),
   speedSlider: document.getElementById("speedSlider"),
   tickSpeedDisplay: document.getElementById("tickSpeedDisplay"),
@@ -153,6 +156,9 @@ function loadState() {
       logs: parsed.logs ?? [],
       history: parsed.history ?? [],
       snapshots: parsed.snapshots ?? [],
+      quickAdjustments: Array.isArray(parsed.quickAdjustments)
+        ? parsed.quickAdjustments
+        : clone(defaultState.quickAdjustments),
       variables: {
         ...defaultState.variables,
         ...(parsed.variables ?? {}),
@@ -188,11 +194,38 @@ function bindEvents() {
     saveState();
   });
 
-  dom.quickButtons.forEach((button) => {
-    button.addEventListener("click", () => {
-      const delta = Number(button.dataset.delta);
-      adjustCapital(delta, "تعديل سريع");
-    });
+  dom.quickButtons?.addEventListener("click", (event) => {
+    const button = event.target.closest("button[data-delta]");
+    if (!button) return;
+    const delta = Number(button.dataset.delta);
+    if (!Number.isFinite(delta)) return;
+    adjustCapital(delta, "تعديل سريع");
+  });
+
+  dom.quickEditorList?.addEventListener("input", (event) => {
+    const input = event.target;
+    if (input.tagName !== "INPUT") return;
+    const index = Number(input.dataset.index);
+    const value = Number(input.value);
+    if (!Number.isFinite(index) || !Number.isFinite(value)) return;
+    state.quickAdjustments[index] = value;
+    renderQuickAdjustments();
+    saveState();
+  });
+
+  dom.quickEditorList?.addEventListener("click", (event) => {
+    const button = event.target.closest("button[data-remove]");
+    if (!button) return;
+    const index = Number(button.dataset.remove);
+    state.quickAdjustments.splice(index, 1);
+    renderQuickAdjustments();
+    saveState();
+  });
+
+  dom.addQuickBtn?.addEventListener("click", () => {
+    state.quickAdjustments.push(250);
+    renderQuickAdjustments();
+    saveState();
   });
 
   dom.toggleFlowBtn.addEventListener("click", () => {
@@ -336,6 +369,7 @@ function adjustCapital(delta, reason, options = {}) {
 
 function renderAll() {
   renderScenarioValues();
+  renderQuickAdjustments();
   updateDisplays();
   renderBudgetLists();
   renderSnapshots();
@@ -379,6 +413,45 @@ function renderScenarioValues() {
 function renderBudgetLists() {
   renderBudgetList(dom.incomeList, state.incomes, "income");
   renderBudgetList(dom.expenseList, state.expenses, "expense");
+}
+
+function renderQuickAdjustments() {
+  if (!dom.quickButtons || !dom.quickEditorList) return;
+  dom.quickButtons.innerHTML = "";
+  if (!state.quickAdjustments.length) {
+    const empty = document.createElement("p");
+    empty.className = "empty-state";
+    empty.textContent = "أضف أزرارًا لتسريع التعديل.";
+    dom.quickButtons.appendChild(empty);
+  } else {
+    state.quickAdjustments.forEach((value) => {
+      const button = document.createElement("button");
+      const classNames = ["quick-chip"];
+      if (value > 0) classNames.push("primary");
+      if (value < 0) classNames.push("negative");
+      button.dataset.delta = value;
+      button.className = classNames.join(" ");
+      button.textContent = formatSigned(value);
+      dom.quickButtons.appendChild(button);
+    });
+  }
+
+  dom.quickEditorList.innerHTML = "";
+  if (!state.quickAdjustments.length) {
+    const li = document.createElement("li");
+    li.className = "muted";
+    li.textContent = "لا توجد أزرار حالياً.";
+    dom.quickEditorList.appendChild(li);
+    return;
+  }
+  state.quickAdjustments.forEach((value, index) => {
+    const li = document.createElement("li");
+    li.innerHTML = `
+      <input type="number" value="${value}" data-index="${index}" step="50" />
+      <button type="button" data-remove="${index}">حذف</button>
+    `;
+    dom.quickEditorList.appendChild(li);
+  });
 }
 
 function renderBudgetList(container, items, type) {
@@ -536,6 +609,7 @@ function saveSnapshot() {
     variables: clone(state.variables),
     incomes: clone(state.incomes),
     expenses: clone(state.expenses),
+    quickAdjustments: clone(state.quickAdjustments),
     meta: new Date().toLocaleString("ar-EG", {
       weekday: "short",
       hour: "2-digit",
@@ -555,6 +629,9 @@ function loadSnapshot(id) {
   state.variables = clone(snapshot.variables);
   state.incomes = clone(snapshot.incomes);
   state.expenses = clone(snapshot.expenses);
+  if (snapshot.quickAdjustments) {
+    state.quickAdjustments = clone(snapshot.quickAdjustments);
+  }
   logEntry(`تم تحميل لقطة "${snapshot.name}"`);
   ensureHistorySeed();
   renderAndPersist();
@@ -792,6 +869,13 @@ function applyPulseAction(action) {
 
 function formatCurrency(value) {
   return numberFormatter.format(Math.round(value));
+}
+
+function formatSigned(value) {
+  const formatted = formatCurrency(value);
+  if (value > 0) return `+${formatted}`;
+  if (value < 0) return `-${formatCurrency(Math.abs(value))}`;
+  return formatted;
 }
 
 function randomBetween(min, max) {

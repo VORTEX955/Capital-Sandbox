@@ -220,6 +220,75 @@ input[type="range"] {
 .quick-buttons button {
     background: var(--accent-soft);
     color: var(--accent-strong);
+    font-weight: 600;
+}
+
+.quick-buttons button.quick-chip {
+    min-width: 110px;
+}
+
+.quick-buttons button.negative {
+    background: rgba(246, 108, 108, 0.15);
+    color: var(--danger);
+}
+
+.quick-buttons button.primary {
+    background: rgba(32, 180, 134, 0.15);
+    color: var(--success);
+}
+
+.control-hub {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 20px;
+}
+
+.micro-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.precision-editor {
+    border: 1px dashed var(--border);
+    border-radius: 22px;
+    padding: 18px;
+    background: #f8f9ff;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.precision-editor h3 {
+    margin: 0;
+}
+
+.quick-editor-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.quick-editor-list li {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.quick-editor-list input {
+    flex: 1;
+}
+
+.quick-editor-list button {
+    border: none;
+    background: rgba(246, 108, 108, 0.15);
+    color: var(--danger);
+    border-radius: 12px;
+    padding: 8px 12px;
+    cursor: pointer;
 }
 
 .stats-grid {
