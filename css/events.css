@@ -120,14 +120,22 @@ textarea {
   border: 1px solid var(--border);
   border-radius: 14px;
   padding: 12px 14px;
-  background: transparent;
+  background: rgba(255, 255, 255, 0.7);
   color: inherit;
   font-size: 1rem;
   font-family: inherit;
+  transition: background 0.3s ease, border 0.3s ease;
 }
 
 textarea {
   resize: vertical;
+}
+
+body[data-theme="dark"] input,
+body[data-theme="dark"] select,
+body[data-theme="dark"] textarea {
+  background: rgba(15, 23, 42, 0.6);
+  border-color: rgba(255, 255, 255, 0.15);
 }
 
 .primary-button {
@@ -161,6 +169,7 @@ td {
   text-align: left;
   padding: 12px;
   border-bottom: 1px solid var(--border);
+  transition: border 0.3s ease;
 }
 
 th {
@@ -180,6 +189,12 @@ th {
   border-radius: 12px;
   padding: 8px 14px;
   cursor: pointer;
+  transition: background 0.2s ease, transform 0.15s ease;
+}
+
+.remove-btn:hover {
+  transform: translateY(-1px);
+  background: rgba(242, 100, 100, 0.25);
 }
 
 .eyebrow {
@@ -200,5 +215,13 @@ th {
     flex-wrap: wrap;
     justify-content: flex-end;
   }
+}
+
+body,
+.card,
+.site-nav,
+#themeToggle,
+table {
+  transition: background 0.3s ease, color 0.3s ease, border 0.3s ease;
 }
 

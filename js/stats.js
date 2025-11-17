@@ -195,6 +195,12 @@ function toggleTheme() {
 
 function updateThemeIcon(mode) {
   if (!dom.themeToggle) return;
-  dom.themeToggle.textContent = mode === "dark" ? "☀️" : "🌙";
+  if (mode === "dark") {
+    dom.themeToggle.textContent = "وضع صباحي ☀️";
+    dom.themeToggle.setAttribute("aria-label", "التبديل إلى الوضع الصباحي");
+  } else {
+    dom.themeToggle.textContent = "وضع ليلي 🌙";
+    dom.themeToggle.setAttribute("aria-label", "التبديل إلى الوضع الليلي");
+  }
 }
 
